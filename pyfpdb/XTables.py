@@ -111,3 +111,4 @@ class Table(Table_Window):
 
         qwindow.setTransientParent(self.gdkhandle)
         qwindow.setFlags(qwindow.flags() | Qt.WindowStaysOnTopHint)
+        qwindow.raise_()

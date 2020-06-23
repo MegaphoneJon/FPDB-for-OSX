@@ -699,16 +699,20 @@ class Database:
 
         tables=self.cursor.execute(self.sql.query['list_tables'])
         tables=self.cursor.fetchall()
-        for table in (u'Actions', u'Autorates', u'Backings', u'Gametypes', u'Hands', u'Boards', u'HandsActions', u'HandsPlayers', u'HandsStove', u'Files', u'HudCache', u'Sessions', u'SessionsCache', u'TourneysCache',u'Players', u'RawHands', u'RawTourneys', u'Settings', u'Sites', u'TourneyTypes', u'Tourneys', u'TourneysPlayers'):
+        for table in (u'Actions', u'Autorates', u'Backings', u'Boards', u'Gametypes', u'Hands', u'HandsActions', u'HandsPlayers', u'HandsStove', u'Files', u'HudCache', u'Sessions', u'SessionsCache', u'TourneysCache',u'Players', u'RawHands', u'RawTourneys', u'Settings', u'Sites', u'TourneyTypes', u'Tourneys', u'TourneysPlayers'):
             print "table:", table
             result+="###################\nTable "+table+"\n###################\n"
             rows=self.cursor.execute(self.sql.query['get'+table])
             rows=self.cursor.fetchall()
             columnNames=self.cursor.description
+            count = 0
             if not rows:
                 result+="empty table\n"
             else:
                 for row in rows:
+                    count+=1
+                    if count % 1000 == 0:
+                        print "row:", count
                     for columnNumber in range(len(columnNames)):
                         if columnNames[columnNumber][0]=="importTime":
                             result+=("  "+columnNames[columnNumber][0]+"=ignore\n")
